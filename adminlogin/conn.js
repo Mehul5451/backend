@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 require("dotenv").config(); // Load from .env
 
 
-mongoose.connect("mongodb+srv://gadhadaramehul786:5451@cluster0.vsz5ku5.mongodb.net/")
+mongoose.connect(process.env.MONGO_URI)
   .then(() => {
     console.log("MongoDB connected");
   })
