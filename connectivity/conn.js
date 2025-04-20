@@ -3,7 +3,7 @@ require("dotenv").config(); // Load from .env
 
 const { Event } = require("../adminlogin/login"); // Keep this if Event is used somewhere
 
-mongoose.connect("mongodb+srv://gadhadaramehul786:5451@cluster0.vsz5ku5.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+mongoose.connect("mongodb+srv://gadhadaramehul786:5451@cluster0.vsz5ku5.mongodb.net/")
   .then(() => {
     console.log("MongoDB connected");
   })
