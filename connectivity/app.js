@@ -23,7 +23,7 @@ const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173']; // Al
 
 const cors = require('cors');
 app.use(cors({
-  origin: ['http://localhost:5173', 'https://djbookingmanagementsystem.vercel.app'],
+  origin: '*',
   credentials: true
 }));
 app.use(cors(corsOptions));
