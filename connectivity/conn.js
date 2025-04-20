@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 require("dotenv").config(); // Load from .env
 
-const { Event } = require("../adminlogin/login"); // Keep this if Event is used somewhere
+//const { Event } = require("../adminlogin/login"); // Keep this if Event is used somewhere
 
 mongoose.connect(process.env.MONGO_URI)
   .then(() => {
