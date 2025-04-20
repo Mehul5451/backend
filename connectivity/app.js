@@ -34,7 +34,7 @@ app.use(express.json()); // Replaces body-parser
 
 
 // POST route to handle registration
-app.post("/submit", async (req, res) => {
+app.post("https://bakend-0ymv.onrender.com/submit", async (req, res) => {
   try {
     console.log("Request body:", req.body); // Log incoming data
 
@@ -68,7 +68,7 @@ app.post("/submit", async (req, res) => {
   }
 });
 
-app.post("/login", async (req, res) => {
+app.post("https://bakend-0ymv.onrender.com/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
