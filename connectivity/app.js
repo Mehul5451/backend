@@ -22,11 +22,10 @@ const JWT_SECRET = "mynameisgadhadaramehulandiambcastudent";
 const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173']; // Allow multiple origins
 
 const cors = require('cors');
-const corsOptions = {
-  origin: 'http://localhost:5173', // Allow only this origin
-  credentials: true, // Allow credentials (cookies, etc.)
-};
-
+app.use(cors({
+  origin: ['http://localhost:5173', 'https://djbookingmanagementsystem.vercel.app'],
+  credentials: true
+}));
 app.use(cors(corsOptions));
 
 
