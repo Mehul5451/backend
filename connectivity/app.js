@@ -71,7 +71,7 @@ app.post("/submit", async (req, res) => {
   }
 });
 
-app.post("https://bakend-0ymv.onrender.com/login", async (req, res) => {
+app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
