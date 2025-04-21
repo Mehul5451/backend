@@ -256,13 +256,9 @@ app.delete("/dj/:id", async (req, res) => {
 /* =========================
    MongoDB Connection
 ========================= */
-mongoose
-  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/DJBOOKING")
-  .then(() => {
-    console.log("✅ MongoDB connected");
-    app.listen(port, () => console.log(`🚀 Server running on port ${port}`));
-  })
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
+app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
+});
 
 
 //------------------------------------
