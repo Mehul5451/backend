@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-
+const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 
@@ -13,17 +13,13 @@ const port = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // CORS options
-const allowedOrigins = ['http://localhost:5000', 'http://localhost:5173','https://frontend-s7gm.vercel.app']; // Allow multiple origins
-
-const cors = require('cors');
-app.use(cors({
-  origin: '*',
-  credentials: true
-}));
-app.use(cors(corsOptions));
+const corsOptions = {
+  origin: '*', // Change for production
+  credentials: true, // Allow cookies
+};
 
 // Middleware
-
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -258,7 +254,7 @@ app.delete("/dj/:id", async (req, res) => {
    MongoDB Connection
 ========================= */
 mongoose
-  .connect(process.env.MONGO_URI )
+  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/DJBOOKING")
   .then(() => {
     console.log("✅ MongoDB connected");
     app.listen(port, () => console.log(`🚀 Server running on port ${port}`));
