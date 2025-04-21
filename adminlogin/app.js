@@ -13,7 +13,7 @@ const port = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // CORS options
-const cors = require('cors');
+
 
 const corsOptions = {
   origin: '*', // change this if needed
