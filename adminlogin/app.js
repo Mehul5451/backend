@@ -13,16 +13,22 @@ const port = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // CORS options
-const allowedOrigins = ['https://frontend-s7gm.vercel.app','http://localhost:3000', 'http://localhost:5173'];
-
-const corsOptions = {
-  origin: '*', // change this if needed
-  methods: ['GET', 'POST'],
-  allowedHeaders: ['Content-Type'],
-};
+const allowedOrigins = [
+  'https://frontend-s7gm.vercel.app',
+  'https://djbookingmanagementsystem.vercel.app',
+  'http://localhost:3000',
+  'http://localhost:5173'
+];
 
 app.use(cors({
-  origin: allowedOrigins,
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 }));
 
