@@ -13,25 +13,13 @@ const port = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // CORS options
-const allowedOrigins = [
-  'https://frontend-s7gm.vercel.app',
-  'https://djbookingmanagementsystem.vercel.app',
-  'http://localhost:3000',
-  'http://localhost:5173'
-];
+const corsOptions = {
+  origin: '*', // Change for production
+  credentials: true, // Allow cookies
+};
 
-app.use(cors({
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true,
-}));
-
+// Middleware
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
 
@@ -265,9 +253,13 @@ app.delete("/dj/:id", async (req, res) => {
 /* =========================
    MongoDB Connection
 ========================= */
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
-});
+mongoose
+  .connect(process.env.MONGO_URI || "mongodb://localhost:27017/DJBOOKING")
+  .then(() => {
+    console.log("✅ MongoDB connected");
+    app.listen(port, () => console.log(`🚀 Server running on port ${port}`));
+  })
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 
 //------------------------------------
