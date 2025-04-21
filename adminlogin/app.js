@@ -13,13 +13,16 @@ const port = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // CORS options
+const cors = require('cors');
+
 const corsOptions = {
-  origin: "http://localhost:5173", // Change for production
-  credentials: true, // Allow cookies
+  origin: '*', // change this if needed
+  methods: ['GET', 'POST'],
+  allowedHeaders: ['Content-Type'],
 };
 
-// Middleware
 app.use(cors(corsOptions));
+
 app.use(express.json());
 app.use(cookieParser());
 
