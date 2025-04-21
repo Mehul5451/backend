@@ -13,7 +13,7 @@ const port = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // CORS options
-const allowedOrigins = ['https://djbookingmanagementsystem.vercel.app','http://localhost:3000', 'http://localhost:5173'];
+const allowedOrigins = ['https://frontend-s7gm.vercel.app','http://localhost:3000', 'http://localhost:5173'];
 
 const corsOptions = {
   origin: '*', // change this if needed
@@ -23,7 +23,7 @@ const corsOptions = {
 
 app.use(cors({
   origin: allowedOrigins,
-  credentials: true, // if you're using cookies or sessions
+  credentials: true,
 }));
 
 app.use(express.json());
