@@ -19,9 +19,11 @@ const JWT_SECRET = "mynameisgadhadaramehulandiambcastudent";
 
 
 
+const cors = require("cors");
+
 const allowedOrigins = [
-  'https://frontend-s7gm.vercel.app',
-  'http://localhost:3000', // optional for dev
+  "https://frontend-s7gm.vercel.app",
+  "http://localhost:3000", // Optional for dev
 ];
 
 app.use(cors({
