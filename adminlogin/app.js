@@ -13,7 +13,7 @@ const port = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // CORS options
-
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173','https://djbookingmanagementsystem.vercel.app'];
 
 const corsOptions = {
   origin: '*', // change this if needed
