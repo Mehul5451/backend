@@ -37,7 +37,7 @@ app.use(express.json()); // Replaces body-parser
 
 
 // POST route to handle registration
-app.post("https://user-pel4.onrender.com/submit", async (req, res) => {
+app.post("/submit", async (req, res) => {
   try {
     console.log("Request body:", req.body); // Log incoming data
 
