@@ -14,21 +14,16 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // CORS options
 const cors = require('cors');
 
-
 const corsOptions = {
-  origin: ['https://frontend-s7gm.vercel.app', 'http://localhost:3000', 'http://localhost:5173'],
-  credentials: true,
+  origin: 'https://frontend-s7gm.vercel.app', // your frontend's domain
+  credentials: true, // allow cookies to be sent
 };
 
 app.use(cors(corsOptions));
-
 app.use((req, res, next) => {
   res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
   next();
 });
-
 
 
 app.use(express.json());
