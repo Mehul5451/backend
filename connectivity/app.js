@@ -22,16 +22,23 @@ const JWT_SECRET = "mynameisgadhadaramehulandiambcastudent";
 const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173','https://djbookingmanagementsystem.vercel.app']; // Allow multiple origins
 
 const cors = require('cors');
-app.use(cors({
-  origin: '*',
-  credentials: true
-}));
+
+const corsOptions = {
+  origin: ['https://frontend-s7gm.vercel.app', 'http://localhost:3000', 'http://localhost:5173'],
+  credentials: true,
+};
+
 app.use(cors(corsOptions));
+
 
 
 
 app.use(express.json()); // Replaces body-parser
 
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  next();
+});
 
 // POST route to handle registration
 app.post("https://user-pel4.onrender.com/submit", async (req, res) => {
