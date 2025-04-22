@@ -14,7 +14,6 @@ const JWT_SECRET = process.env.JWT_SECRET;
 // CORS options
 const cors = require('cors');
 
-const cors = require('cors');
 
 const corsOptions = {
   origin: ['https://frontend-s7gm.vercel.app', 'http://localhost:3000', 'http://localhost:5173'],
