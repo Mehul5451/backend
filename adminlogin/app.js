@@ -9,8 +9,7 @@ const { Admin, Event , DJ} = require("./login"); // Corrected Import
 
 const app = express();
 const port = process.env.PORT || 5000;
-const JWT_SECRET = process.env.JWT_SECRET || "defaultsecret";
-
+const JWT_SECRET = process.env.JWT_SECRET;
 
 // CORS options
 const cors = require('cors');
@@ -45,15 +44,14 @@ app.post("/admin-login", async (req, res) => {
       console.log("❌ Admin not found");
       return res.status(404).json({ error: "User not found" });
     }
-    
-    const isMatch = await bcrypt.compare(password, user.password);
-    console.log("Password Match:", isMatch);
-    
+
+    const isMatch = password == user.password;
+    console.log("Password Match:", isMatch); // See if bcrypt check is passing
+
     if (!isMatch) {
       console.log("❌ Invalid password for:", email);
       return res.status(401).json({ error: "Invalid credentials" });
     }
-    
 
     const adminToken = jwt.sign(
       { userId: user._id, email: user.email },
