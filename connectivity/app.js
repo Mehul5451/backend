@@ -17,20 +17,35 @@ const JWT_SECRET = "mynameisgadhadaramehulandiambcastudent";
 
 
 
+const cors = require('cors');
 
-
-const allowedOrigins = [ 'http://localhost:3000',
+const allowedOrigins = [
+  'http://localhost:3000',
   'http://localhost:5173',
   'https://frontend-s7gm.vercel.app',
-  'https://djbookingmanagementsystem.vercel.app']; // Allow multiple origins
+  'https://djbookingmanagementsystem.vercel.app'
+];
 
-const cors = require('cors');
 const corsOptions = {
-  origin: '*', // Allow only this origin
-  credentials: true, // Allow credentials (cookies, etc.)
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  credentials: true
 };
 
 app.use(cors(corsOptions));
+
+// Add this too:
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Credentials", "true");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
+  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+  next();
+});
 
 
 app.use(express.json()); // Replaces body-parser
