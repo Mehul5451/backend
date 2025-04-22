@@ -19,22 +19,22 @@ const JWT_SECRET = "mynameisgadhadaramehulandiambcastudent";
 
 
 
-const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173','https://djbookingmanagementsystem.vercel.app']; // Allow multiple origins
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173']; // Allow multiple origins
 
 const cors = require('cors');
-app.use(cors({
-  origin: '*',
-  credentials: true
-}));
-app.use(cors(corsOptions));
+const corsOptions = {
+  origin: '*', // Allow only this origin
+  credentials: true, // Allow credentials (cookies, etc.)
+};
 
+app.use(cors(corsOptions));
 
 
 app.use(express.json()); // Replaces body-parser
 
 
 // POST route to handle registration
-app.post("https://user-pel4.onrender.com/submit", async (req, res) => {
+app.post("/submit", async (req, res) => {
   try {
     console.log("Request body:", req.body); // Log incoming data
 
@@ -68,7 +68,7 @@ app.post("https://user-pel4.onrender.com/submit", async (req, res) => {
   }
 });
 
-app.post("https://bakend-0ymv.onrender.com/login", async (req, res) => {
+app.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
 
@@ -161,7 +161,7 @@ app.post("/bookings", authenticateToken, async (req, res) => {
 });
 
 
-//get user`s booking
+// 🔵 Get All Bookings
 app.get("/user-bookings", authenticateToken, async (req, res) => {
   try {
     const userId = req.user.userId; // Get userId from decoded token
@@ -172,7 +172,7 @@ app.get("/user-bookings", authenticateToken, async (req, res) => {
   }
 });
 
-// 🔵 Get All Bookings
+
 app.get("/bookings", async (req, res) => {
   try {
     const bookings = await djBooking

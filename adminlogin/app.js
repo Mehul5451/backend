@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 
@@ -12,20 +13,13 @@ const port = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // CORS options
-const cors = require('cors');
-
 const corsOptions = {
-  origin: 'https://frontend-s7gm.vercel.app', // your frontend's domain
-  credentials: true, // allow cookies to be sent
+  origin: "http://localhost:5173", // Change for production
+  credentials: true, // Allow cookies
 };
 
+// Middleware
 app.use(cors(corsOptions));
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", "true");
-  next();
-});
-
-
 app.use(express.json());
 app.use(cookieParser());
 
@@ -37,63 +31,53 @@ app.use(cookieParser());
 app.post("/admin-login", async (req, res) => {
   try {
     const { email, password } = req.body;
-    console.log("Login Request:", { email, password }); // Log incoming credentials
 
+    // Check if the user exists
     const user = await Admin.findOne({ email });
-    if (!user) {
-      console.log("❌ Admin not found");
-      return res.status(404).json({ error: "User not found" });
-    }
+    if (!user) return res.status(404).json({ error: "User not found" });
 
-    const isMatch = password == user.password;
-    console.log("Password Match:", isMatch); // See if bcrypt check is passing
+    // Compare the password
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) return res.status(401).json({ error: "Invalid credentials" });
 
-    if (!isMatch) {
-      console.log("❌ Invalid password for:", email);
-      return res.status(401).json({ error: "Invalid credentials" });
-    }
-
+    // Create the JWT token
     const adminToken = jwt.sign(
       { userId: user._id, email: user.email },
       JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: '1h' }
     );
 
-    console.log("✅ Admin token created");
+    // Send the token in the response
     res.status(200).json({ token: adminToken });
   } catch (error) {
-    console.error("💥 Login Error:", error);
+    console.error("Error during login:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
 
 
-
 // Auth Middleware
 const authMiddleware = async (req, res, next) => {
-  const authHeader = req.headers.authorization;
+  const token = req.headers.authorization?.split(" ")[1]; // Get token from Authorization header
 
-  if (!authHeader || !authHeader.startsWith("Bearer ")) {
+  if (!token) {
     return res.status(401).json({ message: "Unauthorized, token required" });
   }
 
-  const token = authHeader.split(" ")[1];
-
   try {
-    const decoded = jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, process.env.JWT_SECRET); // Verify the token
     const admin = await Admin.findById(decoded.userId);
 
     if (!admin) {
       return res.status(401).json({ message: "Unauthorized, admin not found" });
     }
 
-    req.admin = admin;
-    next();
+    req.admin = admin; // Attach admin info to the request
+    next(); // Proceed to the next middleware/route handler
   } catch (error) {
     return res.status(403).json({ message: "Invalid or expired token" });
   }
 };
-
 
 // Protected Admin Route
 app.get("/admin", authMiddleware, async (req, res) => {
