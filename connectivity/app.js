@@ -16,7 +16,6 @@ const { Userdata, djBooking , ticketBooking  , Event} = require("./register");
 const JWT_SECRET = "mynameisgadhadaramehulandiambcastudent";
 
 
-
 const cors = require('cors');
 
 const allowedOrigins = [
@@ -37,15 +36,13 @@ const corsOptions = {
   credentials: true
 };
 
+// ✅ Apply CORS FIRST!
 app.use(cors(corsOptions));
 
-// Add this too:
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Credentials", "true");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-  res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-  next();
-});
+// ✅ Add preflight handler for complex requests (OPTIONS)
+app.options('*', cors(corsOptions));
+
+app.use(express.json()); // body parser
 
 
 app.use(express.json()); // Replaces body-parser
