@@ -21,7 +21,7 @@ const cors = require('cors');
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
-  'https://frontend-s7gm.vercel.app/login',
+  'https://frontend-s7gm.vercel.app',
   'https://djbookingmanagementsystem.vercel.app'
 ];
 
