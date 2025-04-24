@@ -21,7 +21,7 @@ const cors = require('cors');
 const allowedOrigins = [
   'http://localhost:3000',
   'http://localhost:5173',
-  'https://frontend-s7gm.vercel.app',
+  'https://frontend-s7gm.vercel.app/login',
   'https://djbookingmanagementsystem.vercel.app'
 ];
 
@@ -45,7 +45,6 @@ app.options('*', cors(corsOptions));
 app.use(express.json()); // body parser
 
 
-app.use(express.json()); // Replaces body-parser
 
 
 // POST route to handle registration
