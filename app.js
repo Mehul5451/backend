@@ -9,42 +9,28 @@ const axios = require("axios");
 
 require("./conn");
 
-const { Userdata, djBooking , ticketBooking  } = require("./register");
+const { Userdata, djBooking , ticketBooking  , Event} = require("./register");
 //const {Event} = require("../adminlogin/login");
 
 
 const JWT_SECRET = "mynameisgadhadaramehulandiambcastudent";
 
 
+
+
+
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173','https://frontend-s7gm.vercel.app']; // Allow multiple origins
+
 const cors = require('cors');
-
-const allowedOrigins = [
-  'http://localhost:3000',
-  'http://localhost:5173',
-  'https://frontend-s7gm.vercel.app',
-  'https://djbookingmanagementsystem.vercel.app'
-];
-
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true
+  origin: 'https://frontend-s7gm.vercel.app', // Allow only this origin
+  credentials: true, // Allow credentials (cookies, etc.)
 };
 
-// ✅ Apply CORS FIRST!
 app.use(cors(corsOptions));
 
-// ✅ Add preflight handler for complex requests (OPTIONS)
-app.options('*', cors(corsOptions));
 
-app.use(express.json()); // body parser
-
-
+app.use(express.json()); // Replaces body-parser
 
 
 // POST route to handle registration
