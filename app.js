@@ -9,7 +9,7 @@ const axios = require("axios");
 
 require("./conn");
 
-const { Userdata, djBooking , ticketBooking  , Event} = require("./register");
+const { Userdata, djBooking , ticketBooking  } = require("./register");
 //const {Event} = require("../adminlogin/login");
 
 
