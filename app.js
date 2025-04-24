@@ -45,7 +45,6 @@ app.options('*', cors(corsOptions));
 app.use(express.json()); // body parser
 
 
-app.use(express.json()); // Replaces body-parser
 
 
 // POST route to handle registration
