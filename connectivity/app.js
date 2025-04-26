@@ -16,35 +16,21 @@ const { Userdata, djBooking , ticketBooking  , Event} = require("./register");
 const JWT_SECRET = "mynameisgadhadaramehulandiambcastudent";
 
 
+
+
+
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173','https://frontend-s7gm.vercel.app']; // Allow multiple origins
+
 const cors = require('cors');
-
-const allowedOrigins = [
-  'http://localhost:3000',
-  'http://localhost:5173',
-  'https://frontend-s7gm.vercel.app',
-  'https://djbookingmanagementsystem.vercel.app'
-];
-
 const corsOptions = {
-  origin: function (origin, callback) {
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
-  credentials: true
+  origin: 'https://frontend-s7gm.vercel.app', // Allow only this origin
+  credentials: true, // Allow credentials (cookies, etc.)
 };
 
-// ✅ Apply CORS FIRST!
 app.use(cors(corsOptions));
 
-// ✅ Add preflight handler for complex requests (OPTIONS)
-app.options('*', cors(corsOptions));
 
-app.use(express.json()); // body parser
-
-
+app.use(express.json()); // Replaces body-parser
 
 
 // POST route to handle registration
@@ -71,7 +57,7 @@ app.post("/submit", async (req, res) => {
       .status(201)
       .json({ success: true, message: "User registered successfully" });
   } catch (error) {
-    console.error("Error during user registration:", error.message);
+    console.error("Error during user registration:", error);
     res
       .status(500)
       .json({

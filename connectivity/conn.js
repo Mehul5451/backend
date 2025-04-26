@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
-const { Event } = require("../adminlogin/login"); // ✅ Correct relative path
+// const { Event } = require("../adminlogin/login"); // ✅ Correct relative path
 
 
-mongoose.connect("mongodb://localhost:27017/DJBOOKING")
+mongoose.connect("mongodb+srv://mehul:5451@cluster0.4awickr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
 .then(() => {
   console.log("MongoDB connected");
 }).catch((err) => {
