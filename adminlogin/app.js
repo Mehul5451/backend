@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const cors = require("cors");
+//const cors = require("cors");
 const mongoose = require("mongoose");
 const cookieParser = require("cookie-parser");
 
@@ -13,12 +13,14 @@ const port = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET;
 
 // CORS options
+const allowedOrigins = ['http://localhost:3000', 'http://localhost:5173','https://frontend-s7gm.vercel.app']; // Allow multiple origins
+
+const cors = require('cors');
 const corsOptions = {
-  origin: "http://localhost:5173", // Change for production
-  credentials: true, // Allow cookies
+  origin: 'https://frontend-s7gm.vercel.app', // Allow only this origin
+  credentials: true, // Allow credentials (cookies, etc.)
 };
 
-// Middleware
 app.use(cors(corsOptions));
 app.use(express.json());
 app.use(cookieParser());
@@ -96,7 +98,7 @@ app.post("/admin-logout", async (req, res) => {
   } catch (error) {
     res.status(500).json({ error: "Internal server error" });
   }
-});
+});                            
 
 /* =========================  
    Event Management
@@ -264,14 +266,14 @@ mongoose
 
 //------------------------------------
 //create admin manualy
-//------------------------------------
+// //------------------------------------
 // const mongoose = require("mongoose");
-// const bcrypt = require("bcrypt");
+// const bcrypt = require("bcryptjs");
 // const {Admin} = require("./login"); // Adjust the path based on your project structure
 
 // const createAdmin = async () => {
 //   try {
-//     await mongoose.connect("mongodb://localhost:27017/DJBOOKING");
+//     await mongoose.connect("mongodb+srv://mehul:5451@cluster0.4awickr.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0");
 
 //     const hashedPassword = await bcrypt.hash("1111", 10); // Hash password
 
